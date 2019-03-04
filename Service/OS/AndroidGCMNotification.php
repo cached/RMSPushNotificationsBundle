@@ -11,6 +11,7 @@ use Psr\Log\LoggerInterface;
 use RMS\PushNotificationsBundle\Exception\InvalidMessageTypeException,
     RMS\PushNotificationsBundle\Message\AndroidMessage,
     RMS\PushNotificationsBundle\Message\MessageInterface;
+use Nyholm\Psr7\Response;
 
 class AndroidGCMNotification implements OSNotificationServiceInterface
 {
@@ -153,10 +154,15 @@ class AndroidGCMNotification implements OSNotificationServiceInterface
 
         // Determine success
         foreach ($this->responses as $response) {
-            $message = json_decode($response->getContent());
+            if ($response instanceof Response) {
+                if ($response->getStatusCode() === 200) {
+                    return true;
+                }
+            }
+            $message = json_decode($response->getBody());
             if ($message === null || $message->success == 0 || $message->failure > 0) {
                 if ($message == null) {
-                    $this->logger->error($response->getContent());
+                    $this->logger->error($response->getBody());
                 } else {
                     foreach ($message->results as $result) {
                         if (isset($result->error)) {
