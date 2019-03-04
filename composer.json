@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": "^7.1",
-        "kriswallsmith/buzz": "1.0.0",
+        "kriswallsmith/buzz": "~0.17.1",
         "psr/log": "^1.0"
     },
     "require-dev": {
