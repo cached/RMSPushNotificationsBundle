@@ -17,6 +17,7 @@
         <!-- main notification service -->
         <service id="rms_push_notifications" class="%rms_push_notifications.class%">
         </service>
+        <service id="%frms_push_notifications.class%" alias="rms_push_notificationsr"/>
 
         <service id="rms_push_notifications.event_listener" class="%rms_push_notifications.event_listener.class%">
             <tag name="kernel.event_listener" event="kernel.terminate" method="onKernelTerminate" />
